@@ -1,7 +1,8 @@
 " Maintainer: Alex Efros <powerman-asdf@ya.ru>
-" Version: 1.0 alpha
+" Version: 1.0
 " Last Modified: Jan 15, 2012
 " License: This file is placed in the public domain.
+" URL: http://www.vim.org/scripts/script.php?script_id=3883
 " Description: Auto save/load sessions
 
 if exists('g:loaded_autosess') || &cp || version < 700
