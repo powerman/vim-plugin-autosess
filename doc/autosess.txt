@@ -1,0 +1,78 @@
+*autosess.txt*	Auto save/load sessions
+
+Author: Alex Efros <powerman-asdf@ya.ru>
+
+For Vim version 7.0 or later.
+This plugin only works if 'compatible' is not set.
+
+Contents:
+    Description	    |autosess|
+    Mappings	    |autosess-mappings|
+    Commands	    |autosess-commands|
+    Settings	    |autosess-settings|
+    Functions	    |autosess-functions|
+
+==============================================================================
+DESCRIPTION							    *autosess*
+
+Start Vim without file arguments to automatically load previous session for
+current directory. This make easier work with complex projects - just chdir to
+project directory and start `vim`.
+
+When you quit from Vim, if there are more than one open tab/window, session
+will be automatically saved. This let you edit single files in same directory
+without breaking your saved session. (Quickfix and vimdiff's windows are
+ignored.)
+
+If you quit from Vim with no open files, session will be deleted. This let you
+start usual empty Vim in this directory next time.
+
+==============================================================================
+MAPPINGS						   *autosess-mappings*
+
+None
+
+==============================================================================
+COMMANDS						   *autosess-commands*
+
+None
+
+==============================================================================
+SETTINGS						   *autosess-settings*
+
+By default, sessions are stored in ~/.vim/autosess/ instead of default
+location (file Session.vim in current directory). You can set alternative
+session file using one of these commands >
+
+    :mksession! /path/another_session.vim
+
+    :let v:this_session = '/path/another_session.vim'
+
+To load alternative session you can either start vim with -S option >
+
+    $ vim -S /path/another_session.vim
+
+or replace current session (if any): >
+
+    :let v:this_session = '/path/another_session.vim'
+    :call AutosessRestore()
+
+==============================================================================
+FUNCTIONS						   *autosess-functions*
+
+							    *AutosessRestore()*
+>
+    :call AutosessRestore()
+
+Will restore previous session for current directory.
+Executed automatically when Vim start, but it also make sense to call it
+manually in case you messed up your open tabs/windows and wanna restore them
+without restarting Vim (or you wanna switch to alternative session).
+
+							    *AutosessUpdate()*
+>
+    :call AutosessUpdate()
+
+Save or delete session. Executed automatically when Vim exits.
+
+
