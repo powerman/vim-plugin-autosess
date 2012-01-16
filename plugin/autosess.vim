@@ -1,6 +1,6 @@
 " Maintainer: Alex Efros <powerman-asdf@ya.ru>
-" Version: 1.0
-" Last Modified: Jan 15, 2012
+" Version: 1.1
+" Last Modified: Jan 17, 2012
 " License: This file is placed in the public domain.
 " URL: http://www.vim.org/scripts/script.php?script_id=3883
 " Description: Auto save/load sessions
@@ -24,6 +24,8 @@ autocmd VimLeave *		if !v:dying | call AutosessUpdate()  | endif
 " like Vim bug, bug report was sent.
 " 2. Trying to open such file as 'Read-Only' will fail because previous
 " &readonly value will be restored from session data.
+" 3. Buffers with &buftype 'quickfix' or 'nofile' will be restored empty,
+" so we can get rid of them here to avoid doing this manually each time.
 function AutosessRestore()
 	if s:IsModified()
 		return s:Error('Some files are modified, please save (or undo) them first')
@@ -36,6 +38,9 @@ function AutosessRestore()
 		execute 'source ' . fnameescape(v:this_session)
 		autocmd!
 		augroup END
+		for bufnr in filter(range(1,bufnr('$')), 'getbufvar(v:val,"&buftype")!~"^$\\|help"')
+			execute bufnr . 'bd!'
+		endfor
 	endif
 endfunction
 
