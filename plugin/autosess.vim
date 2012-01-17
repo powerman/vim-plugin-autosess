@@ -39,7 +39,7 @@ function AutosessRestore()
 		autocmd!
 		augroup END
 		for bufnr in filter(range(1,bufnr('$')), 'getbufvar(v:val,"&buftype")!~"^$\\|help"')
-			execute bufnr . 'bd!'
+			execute bufnr . 'bwipeout!'
 		endfor
 	endif
 endfunction
