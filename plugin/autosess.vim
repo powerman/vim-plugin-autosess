@@ -1,6 +1,6 @@
 " Maintainer: Alex Efros <powerman-asdf@ya.ru>
-" Version: 1.1
-" Last Modified: Jan 17, 2012
+" Version: 1.2.0
+" Last Modified: 2012-12-19
 " License: This file is placed in the public domain.
 " URL: http://www.vim.org/scripts/script.php?script_id=3883
 " Description: Auto save/load sessions
@@ -11,10 +11,12 @@ endif
 let g:loaded_autosess = 1
 
 
-let s:session_dir   = $HOME.'/.vim/autosess/'
+if !exists('g:autosess_dir')
+	let g:autosess_dir   = '~/.vim/autosess/'
+endif
 let s:session_file  = substitute(getcwd(), '/', '%', 'g').'.vim'
 
-autocmd VimEnter *		if v:this_session == '' | let v:this_session = s:session_dir.s:session_file | endif
+autocmd VimEnter *		if v:this_session == '' | let v:this_session = expand(g:autosess_dir).'/'.s:session_file | endif
 autocmd VimEnter * nested	if !argc()  | call AutosessRestore() | endif
 autocmd VimLeave *		if !v:dying | call AutosessUpdate()  | endif
 
@@ -45,8 +47,8 @@ function AutosessRestore()
 endfunction
 
 function AutosessUpdate()
-	if !isdirectory(s:session_dir)
-		call mkdir(s:session_dir, '', 0700)
+	if !isdirectory(expand(g:autosess_dir))
+		call mkdir(expand(g:autosess_dir), 'p', 0700)
 	endif
 	if tabpagenr('$') > 1 || (s:WinNr() > 1 && !&diff)
 		execute 'mksession! ' . fnameescape(v:this_session)

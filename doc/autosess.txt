@@ -40,7 +40,13 @@ None
 ==============================================================================
 SETTINGS						   *autosess-settings*
 
-By default, sessions are stored in ~/.vim/autosess/ instead of default
+g:autosess_dir	    = ~/.vim/autosess/		*g:autosess_dir*
+	Set directory used to keep your sessions. Directory will be
+	automatically created, if needed.
+
+Custom session file:~
+
+By default, sessions are stored in |g:autosess_dir| instead of default
 location (file Session.vim in current directory). You can set alternative
 session file using one of these commands >
 
