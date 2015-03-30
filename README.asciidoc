@@ -1,11 +1,6 @@
 autosess
 ========
 
-== Repositories
-
-- Main (Mercurial) at http://code.google.com/p/vim-plugin-autosess/
-- Mirror (Git) at https://github.com/powerman/vim-plugin-autosess
-
 == Description
 
 Start Vim without file arguments to automatically load previous session for current directory. This make easier work with complex projects - just chdir to project directory and start `vim`.
