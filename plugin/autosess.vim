@@ -1,6 +1,6 @@
 " Maintainer: Alex Efros <powerman-asdf@ya.ru>
-" Version: 1.2.0
-" Last Modified: 2012-12-19
+" Version: 1.2.1
+" Last Modified: 2015-09-16
 " License: This file is placed in the public domain.
 " URL: http://www.vim.org/scripts/script.php?script_id=3883
 " Description: Auto save/load sessions
@@ -37,7 +37,7 @@ function AutosessRestore()
 		augroup AutosessSwap
 		autocmd SwapExists *		call s:SwapExists()
 		autocmd SessionLoadPost *	call s:FailIfSwapExists()
-		execute 'source ' . fnameescape(v:this_session)
+		silent execute 'source ' . fnameescape(v:this_session)
 		autocmd!
 		augroup END
 		for bufnr in filter(range(1,bufnr('$')), 'getbufvar(v:val,"&buftype")!~"^$\\|help"')
