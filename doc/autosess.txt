@@ -19,10 +19,11 @@ Start Vim without file arguments to automatically load previous session for
 current directory. This make easier work with complex projects - just chdir to
 project directory and start `vim`.
 
-When you quit from Vim, if there are more than one open tab/window, session
-will be automatically saved. This let you edit single files in same directory
-without breaking your saved session. (Quickfix and vimdiff's windows are
-ignored.)
+When you quit from Vim, if there is at least one open window, session will be
+automatically saved (delete/wipe all buffers before exiting to cause
+previously created session to be deleted). This lets you edit files in the
+same directory (by specifying them on command-line) without breaking your
+saved session.  (Quickfix and vimdiff's windows are ignored.)
 
 If you quit from Vim with no open files, session will be deleted. This let you
 start usual empty Vim in this directory next time.
