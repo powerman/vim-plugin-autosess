@@ -38,8 +38,9 @@ function AutosessRestore()
 		autocmd SwapExists *		call s:SwapExists()
 		autocmd SessionLoadPost *	call s:FailIfSwapExists()
 		silent execute 'source ' . fnameescape(v:this_session)
-		autocmd!
 		augroup END
+		autocmd! AutosessSwap
+		augroup! AutosessSwap
 		for bufnr in filter(range(1,bufnr('$')), 'getbufvar(v:val,"&buftype")!~"^$\\|help"')
 			execute bufnr . 'bwipeout!'
 		endfor
