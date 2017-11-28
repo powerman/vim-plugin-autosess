@@ -1,6 +1,6 @@
 " Maintainer: Alex Efros <powerman-asdf@ya.ru>
-" Version: 1.2.1
-" Last Modified: 2015-09-16
+" Version: 1.2.3
+" Last Modified: 2017-11-28
 " License: This file is placed in the public domain.
 " URL: http://www.vim.org/scripts/script.php?script_id=3883
 " Description: Auto save/load sessions
@@ -30,15 +30,16 @@ autocmd VimLeave *		if !v:dying | call AutosessUpdate()  | endif
 " so we can get rid of them here to avoid doing this manually each time.
 function AutosessRestore()
 	if s:IsModified()
-		return s:Error('Some files are modified, please save (or undo) them first')
+		echoerr 'Some files are modified, please save (or undo) them first'
+		return
 	endif
 	bufdo bdelete
 	if filereadable(v:this_session)
 		augroup AutosessSwap
 		autocmd SwapExists *		call s:SwapExists()
 		autocmd SessionLoadPost *	call s:FailIfSwapExists()
-		silent execute 'source ' . fnameescape(v:this_session)
 		augroup END
+		silent execute 'source ' . fnameescape(v:this_session)
 		autocmd! AutosessSwap
 		augroup! AutosessSwap
 		for bufnr in filter(range(1,bufnr('$')), 'getbufvar(v:val,"&buftype")!~"^$\\|help"')
@@ -58,12 +59,6 @@ function AutosessUpdate()
 	endif
 endfunction
 
-
-function s:Error(msg)
-	echohl ErrorMsg
-	echo a:msg
-	echohl None
-endfunction
 
 function s:IsModified()
 	for i in range(1, bufnr('$'))
@@ -92,8 +87,7 @@ endfunction
 
 function s:FailIfSwapExists()
 	if exists('s:swapname')
-		call s:Error('Swap file "'.s:swapname.'" already exists!'."\n".
-			\ 'Autosess: failed to restore session, exiting.')
+		echoerr 'Swap file "'.s:swapname.'" already exists!' 'Autosess: failed to restore session, exiting.'
 		qa!
 	endif
 endfunction
